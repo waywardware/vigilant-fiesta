@@ -1,0 +1,69 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "outDir": "compiled/src",
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "inlineSourceMap": true,
+    "lib": ["es2015", "es2017", "dom"]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "typings",
+    "test"
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

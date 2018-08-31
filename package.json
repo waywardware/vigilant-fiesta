@@ -1,0 +1,38 @@
+{
+  "name": "vigilant-fiesta",
+  "version": "0.1.0",
+  "description": "A hobby project creating a simple ecosystem sim.",
+  "main": "compiled/src/main.js",
+  "scripts": {
+    "prestart": "npm install && npm run compile",
+    "start": "concurrently --kill-others -s first \"tsc --watch\" \"cross-env NODE_ENV=development npm run electron\"",
+    "cleanup": "rimraf compiled/src",
+    "copy-html": "mkdirp compiled/src/views && cpx src/views/index.html compiled/src/views",
+    "compile": "npm run cleanup && npm run tsc && npm run copy-html",
+    "tsc": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "electron": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waywardware/vigilant-fiesta.git"
+  },
+  "author": "abouzo",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/waywardware/vigilant-fiesta/issues"
+  },
+  "homepage": "https://github.com/waywardware/vigilant-fiesta#readme",
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "cross-env": "^5.2.0",
+    "electron": "^2.0.8",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.3"
+  },
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
