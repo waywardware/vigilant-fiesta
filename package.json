@@ -17,6 +17,10 @@
     "type": "git",
     "url": "git+https://github.com/waywardware/vigilant-fiesta.git"
   },
+  "engineStrict": true,
+  "engines": {
+    "node": ">= 6.0.0"
+  },
   "author": "abouzo",
   "license": "GPL-3.0",
   "bugs": {
