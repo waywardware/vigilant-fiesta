@@ -2,7 +2,7 @@
   "name": "vigilant-fiesta",
   "version": "0.1.0",
   "description": "A hobby project creating a simple ecosystem sim.",
-  "main": "compiled/src/main.js",
+  "main": "compiled/src/Main.js",
   "scripts": {
     "prestart": "npm install && npm run compile",
     "start": "concurrently --kill-others -s first \"tsc --watch\" \"cross-env NODE_ENV=development npm run electron\"",
