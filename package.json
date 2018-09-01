@@ -10,8 +10,9 @@
     "copy-html": "mkdirp compiled/src/views && cpx src/views/index.html compiled/src/views",
     "compile": "npm run cleanup && npm run tsc && npm run copy-html",
     "tsc": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "electron": "electron ."
+    "test": "npm run lint",
+    "electron": "electron .",
+    "lint": "tslint `find src -name '*.ts*'` `find test -name '*.ts*'`"
   },
   "repository": {
     "type": "git",
