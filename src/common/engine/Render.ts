@@ -32,7 +32,7 @@ export default class Render {
 
     public draw(): Promise<void> {
         let promise: Promise<void> = new Promise((resolve, reject) => {
-            this.canvasContext.clearRect(0,0, this.canvas.width, this.canvas.height);
+            this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
             let blockSize: IDimensions = {
                 x: this.canvas.width / this.size.x,
                 y: this.canvas.height / this.size.y,
