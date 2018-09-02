@@ -2,7 +2,7 @@
   "name": "vigilant-fiesta",
   "version": "0.1.0",
   "description": "A hobby project creating a simple ecosystem sim.",
-  "main": "compiled/src/main.js",
+  "main": "compiled/src/Main.js",
   "scripts": {
     "prestart": "npm install && npm run compile",
     "start": "concurrently --kill-others -s first \"tsc --watch\" \"cross-env NODE_ENV=development npm run electron\"",
@@ -10,12 +10,17 @@
     "copy-html": "mkdirp compiled/src/views && cpx src/views/index.html compiled/src/views",
     "compile": "npm run cleanup && npm run tsc && npm run copy-html",
     "tsc": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "electron": "electron ."
+    "test": "npm run lint",
+    "electron": "electron .",
+    "lint": "tslint `find src -name '*.ts*'` `find test -name '*.ts*'`"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/waywardware/vigilant-fiesta.git"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">= 6.0.0"
   },
   "author": "abouzo",
   "license": "GPL-3.0",
