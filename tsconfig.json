@@ -1,69 +1,22 @@
 {
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "noImplicitAny": true,
-    "noEmitOnError": true,
-    "outDir": "compiled/src",
-    "strictNullChecks": true,
-    "noImplicitThis": true,
-    "inlineSourceMap": true,
-    "lib": ["es2015", "es2017", "dom"]
-  },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "typings",
-    "test"
-  ]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "target": "es6",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noEmitOnError": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "jsx": "react",
+        "lib": ["es2015", "es2017", "dom"]
+    },
+    "exclude": [
+      "node_modules",
+      "src/main"
+    ]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
