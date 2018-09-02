@@ -1,4 +1,5 @@
 import { IDrawable, IDimensions } from "./engine/Render";
+import { Colors } from "./utils/Constants";
 
 export class Animal implements IDrawable {
     private location: IDimensions;
@@ -13,11 +14,15 @@ export class Animal implements IDrawable {
         this.location = location;
     }
 
-    getLocation(): IDimensions {
+    public getLocation(): IDimensions {
         return this.location;
     }
 
-    getSize(): IDimensions {
+    public getSize(): IDimensions {
         return this.size;
+    }
+
+    public getFillStyle(): string | CanvasGradient | CanvasPattern {
+        return Colors.green;
     }
 }

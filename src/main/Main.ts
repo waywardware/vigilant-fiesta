@@ -10,7 +10,7 @@ app.on("window-all-closed", onAllWindowsClosed);
 app.on("activate", onActivate);
 
 function createWindow() {
-    window = new BrowserWindow({ width: 800, height: 600 });
+    window = new BrowserWindow({ width: 800, height: 800 });
     window.loadURL(
         url.format({
         pathname: path.join(__basedir, "compiled/src/index.html"),

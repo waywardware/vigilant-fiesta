@@ -338,6 +338,30 @@ eval("\n\nif (false) {} else {\n  module.exports = __webpack_require__(/*! ./cjs
 
 /***/ }),
 
+/***/ "./src/common/Animal.ts":
+/*!******************************!*\
+  !*** ./src/common/Animal.ts ***!
+  \******************************/
+/*! exports provided: Animal */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Animal\", function() { return Animal; });\n/* harmony import */ var _utils_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/Constants */ \"./src/common/utils/Constants.ts\");\n\nclass Animal {\n    constructor(location, size) {\n        this.size = { x: 1, y: 1 };\n        this.location = location;\n        this.size = size;\n    }\n    move(location) {\n        this.location = location;\n    }\n    getLocation() {\n        return this.location;\n    }\n    getSize() {\n        return this.size;\n    }\n    getFillStyle() {\n        return _utils_Constants__WEBPACK_IMPORTED_MODULE_0__[\"Colors\"].green;\n    }\n}\n\n\n//# sourceURL=webpack:///./src/common/Animal.ts?");
+
+/***/ }),
+
+/***/ "./src/common/engine/Render.ts":
+/*!*************************************!*\
+  !*** ./src/common/engine/Render.ts ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Render; });\nclass Render {\n    constructor(canvas, size) {\n        this.canvas = canvas;\n        this.size = size;\n        this.canvasContext = canvas.getContext(\"2d\");\n        this.drawableList = new Array();\n    }\n    addDrawable(drawable) {\n        this.drawableList.push(drawable);\n    }\n    removeDrawable(drawable) {\n        let index = this.drawableList.indexOf(drawable);\n        if (index >= -1) {\n            this.drawableList.splice(index, 1);\n        }\n    }\n    draw() {\n        let promise = new Promise((resolve, reject) => {\n            this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);\n            let blockSize = {\n                x: this.canvas.width / this.size.x,\n                y: this.canvas.height / this.size.y,\n            };\n            this.drawableList.forEach(drawable => {\n                let location = drawable.getLocation();\n                let size = drawable.getSize();\n                this.canvasContext.beginPath();\n                if (drawable.getFillStyle) {\n                    this.canvasContext.fillStyle = drawable.getFillStyle();\n                    this.canvasContext.fillRect(location.x * blockSize.x, location.y * blockSize.y, size.x * blockSize.x, size.y * blockSize.y);\n                }\n                if (drawable.getStrokeStyle) {\n                    this.canvasContext.strokeStyle = drawable.getStrokeStyle();\n                    this.canvasContext.strokeRect(location.x * blockSize.x, location.y * blockSize.y, size.x * blockSize.x, size.y * blockSize.y);\n                }\n                this.canvasContext.stroke();\n                this.canvasContext.closePath();\n            });\n            resolve();\n        });\n        return promise;\n    }\n}\n\n\n//# sourceURL=webpack:///./src/common/engine/Render.ts?");
+
+/***/ }),
+
 /***/ "./src/common/utils/Constants.ts":
 /*!***************************************!*\
   !*** ./src/common/utils/Constants.ts ***!
@@ -394,7 +418,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return CanvasComponent; });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n\nclass CanvasComponent extends react__WEBPACK_IMPORTED_MODULE_0__[\"Component\"] {\n    render() {\n        return (react__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"](\"canvas\", { id: \"mainboard\" }));\n    }\n}\n\n\n//# sourceURL=webpack:///./src/renderer/views/CanvasComponent.tsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return CanvasComponent; });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _common_engine_Render__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/engine/Render */ \"./src/common/engine/Render.ts\");\n/* harmony import */ var _common_Animal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/Animal */ \"./src/common/Animal.ts\");\n\n\n\nclass CanvasComponent extends react__WEBPACK_IMPORTED_MODULE_0__[\"Component\"] {\n    componentDidMount() {\n        let render = new _common_engine_Render__WEBPACK_IMPORTED_MODULE_1__[\"default\"](this.canvas, { x: 20, y: 20 });\n        let chicken = new _common_Animal__WEBPACK_IMPORTED_MODULE_2__[\"Animal\"]({ x: 1, y: 1 }, { x: 1, y: 1 });\n        render.addDrawable(chicken);\n        render.draw().then(() => {\n            setTimeout(() => {\n                chicken.move({ x: 0, y: 0 });\n                render.draw();\n            }, 3000);\n        });\n    }\n    render() {\n        return (react__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"](\"canvas\", { id: \"mainboard\", ref: \"canvas\" }));\n    }\n    get canvas() {\n        /* tslint:disable:no-string-literal */\n        return this.refs[\"canvas\"];\n    }\n}\n\n\n//# sourceURL=webpack:///./src/renderer/views/CanvasComponent.tsx?");
 
 /***/ })
 
