@@ -1,14 +1,16 @@
 export interface IDrawable {
     getLocation: () => IDimensions;
     getSize: () => IDimensions;
-    getFillStyle?: () => string | CanvasGradient | CanvasPattern;
-    getStrokeStyle?: () => string | CanvasGradient | CanvasPattern;
+    getFillStyle?: () => CanvasColor;
+    getStrokeStyle?: () => CanvasColor;
 }
 
 export interface IDimensions {
-    x: number;
-    y: number;
+    readonly x: number;
+    readonly y: number;
 }
+
+export type CanvasColor  = string | CanvasGradient | CanvasPattern;
 
 export default class Render {
     readonly canvasContext: CanvasRenderingContext2D;

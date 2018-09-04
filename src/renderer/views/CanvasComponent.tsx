@@ -1,21 +1,16 @@
 import * as React from "react";
 import Render from "../../common/engine/Render";
-import { Animal } from "../../common/Animal";
+import Animal from "../../common/entities/Animal";
+import Animals from "../../common/entities/Animals";
+import Plants from "../../common/entities/Plants";
 
 export default class CanvasComponent extends React.Component {
     componentDidMount() {
         let render: Render = new Render(this.canvas, {x: 20, y: 20});
-        let chicken: Animal = new Animal(
-            {x: 1, y: 1},
-            {x: 1, y: 1},
-        );
-        render.addDrawable(chicken);
-        render.draw().then(() => {
-            setTimeout(() => {
-                chicken.move({x: 0, y: 0});
-                render.draw();
-            },         3000);
-        });
+        let dog: Animal = Animals.Dog.create("jerry", {x: 1, y: 1});
+        console.log(dog.canEat({species: Animals.Rabbit.species}));
+        render.addDrawable(dog);
+        render.draw();
     }
 
     render() {
