@@ -4,6 +4,10 @@ node_js:
 before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; fi
 
+branches:
+  only:
+  - master
+  
 matrix:
   include:
     - os: linux
