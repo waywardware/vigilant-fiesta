@@ -2,13 +2,15 @@
     "name": "vigilant-fiesta",
     "version": "0.1.0",
     "description": "A hobby project creating a simple ecosystem sim.",
-    "main": "compiled/src/main.js",
+    "main": "compiled/src/Main.js",
     "scripts": {
+        "postinstall": "electron-builder install-app-deps",
+        "pack": "cross-env DEBUG=electron-builder electron-builder build",
         "prestart": "npm install && npm run compile && npm run lint",
         "start": "cross-env NODE_ENV=development npm run electron",
         "cleanup": "rimraf compiled/src",
         "copy-html": "mkdirp compiled/src/ && cpx src/renderer/index.html compiled/src",
-        "compile": "npm run cleanup && webpack --config webpack.config.js && npm run copy-html",
+        "compile": "npm run cleanup && rollup -c && npm run copy-html",
         "tsc": "tsc",
         "unit-tests": "NODE_ENV=test electron-mocha --require ts-node/register $(find test -name '*_spec.ts')",
         "test": "npm run lint && npm run unit-tests",
@@ -36,24 +38,36 @@
         "concurrently": "^4.0.1",
         "cpx": "^1.5.0",
         "cross-env": "^5.2.0",
+        "electron": "^2.0.8",
+        "electron-builder": "^20.28.3",
         "electron-mocha": "^6.0.4",
-        "html-webpack-plugin": "^2.30.1",
         "jsdom": "^12.0.0",
         "mkdirp": "^0.5.1",
         "mocha": "^5.2.0",
         "npm-run-all": "^4.1.2",
         "rimraf": "^2.6.2",
+        "rollup": "^0.65.1",
+        "rollup-plugin-typescript": "^0.8.1",
         "sinon": "^6.1.5",
         "ts-loader": "^4.0.0",
         "ts-node": "^7.0.1",
-        "tslint": "^5.11.0",
-        "webpack-cli": "^3.1.0"
+        "tslint": "^5.11.0"
     },
     "dependencies": {
-        "electron": "^2.0.8",
         "react": "^16.4.2",
         "react-dom": "^16.4.2",
-        "typescript": "^3.0.3",
-        "webpack": "^4.17.1"
+        "typescript": "^3.0.3"
+    },
+    "build": {
+        "appId": "your.id",
+        "mac": {
+            "category": "your.app.category.type"
+        },
+        "files": [
+            "compiled/",
+            "compiled/src/index.html",
+            "compiled/src/Main.js",
+            "compiled/src/Renderer.js"
+        ]
     }
 }
