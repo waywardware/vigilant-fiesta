@@ -1,7 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
 import * as url from "url";
-import __basedir from "../basepath";
 
 let window: BrowserWindow | null = null;
 
@@ -13,10 +12,11 @@ function createWindow() {
     window = new BrowserWindow({ width: 800, height: 800 });
     window.loadURL(
         url.format({
-        pathname: path.join(__basedir, "compiled/src/index.html"),
+        pathname: path.join(__dirname, "/index.html"),
         protocol: "file:",
         slashes: true,
         }));
+    window.webContents.openDevTools();
     window.on("closed", (): any => (window = null));
 }
 
