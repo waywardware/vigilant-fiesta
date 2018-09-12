@@ -20,4 +20,8 @@ export default class Animal implements IDrawable, IEdible {
         }
         return false;
     }
+
+    public move( target: IDimensions) {
+        this.location = target;
+    }
 }
