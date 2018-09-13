@@ -1,18 +1,13 @@
-import Rx, { Subscriber, Subject, interval, Observable, Operator, merge } from "rxjs";
-import { take, map, scan, filter, withLatestFrom, share } from "rxjs/operators";
+import { Observable, Subject, Subscriber } from "rxjs";
+import { scan, share, skipUntil, takeUntil, tap, map } from "rxjs/operators";
 
 let speed = 1;
 let dayLength = 10;
 
-export const setSpeed = (target: number) => speed = target;
-
-const countUpAndResetAfter = (resetNumber: number) => scan((count) => {
-    console.log("count: ", count);
-    if (count === resetNumber) {
-        count = 0;
-    }
-    return count + 1;
-},                                                         0);
+export interface ITime {
+    hour: number;
+    day: number;
+}
 
 const variableSpeedLoop = (observer: Subscriber<number>) => {
     let tick = () => {
@@ -22,8 +17,17 @@ const variableSpeedLoop = (observer: Subscriber<number>) => {
     tick();
 };
 
-const hourStream = new Observable(variableSpeedLoop).pipe(countUpAndResetAfter(dayLength));
-const dayStream = hourStream.pipe(filter(hour => hour === 1), scan(count => count + 1, 0), share());
-export const timeKeeper = hourStream.pipe(/*withLatestFrom(dayStream),*/ map((hourInput) => {
-    return {hour: hourInput};
-}),                                                                      share());
+const start$ = new Subject();
+const end$ = new Subject();
+export const timeKeeper = new Observable(variableSpeedLoop).pipe(
+    skipUntil(start$),
+    scan<number, ITime>((time, value) => ({hour: time.hour + 1, day: time.day}), {hour: 0, day: 0}),
+    tap(time => time.hour = time.hour > dayLength ? 1 : time.hour),
+    tap(time => time.day = time.hour === 1 ? time.day + 1 : time.day),
+    takeUntil(end$),
+    share(),
+    );
+
+export const start = () => start$.next();
+export const end = () => end$.next();
+export const setSpeed = (target: number) => speed = target;

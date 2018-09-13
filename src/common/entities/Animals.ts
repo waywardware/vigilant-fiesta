@@ -2,6 +2,7 @@ import Animal from "./Animal";
 import Plants from "./Plants";
 import { IDimensions } from "../engine/Render";
 import { IDiet, ISpeed } from "./EntityInterfaces";
+import { timeKeeper } from "../engine/GameEngine";
 
 
 let Animals = {

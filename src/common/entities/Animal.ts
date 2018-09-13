@@ -1,6 +1,7 @@
-import { IDrawable, IDimensions, CanvasColor } from "../engine/Render";
+import { ITime, timeKeeper } from "../engine/GameEngine";
+import { CanvasColor, IDimensions, IDrawable } from "../engine/Render";
 import { Colors } from "../utils/Constants";
-import { IEdible, ISpeed, IDiet } from "./EntityInterfaces";
+import { IDiet, IEdible, ISpeed } from "./EntityInterfaces";
 
 export default class Animal implements IDrawable, IEdible {
 
@@ -9,7 +10,9 @@ export default class Animal implements IDrawable, IEdible {
     public getFillStyle = (): CanvasColor => Colors.green;
 
     constructor(readonly name: string, readonly species: string, readonly diet: IDiet, readonly speed: ISpeed,
-                private location: IDimensions, private size: IDimensions) {}
+                private location: IDimensions, private size: IDimensions) {
+                    timeKeeper.subscribe((time) => this.live(time));
+                }
 
     public canEat(target: IEdible): boolean {
         if (this === target) return false;
@@ -21,7 +24,11 @@ export default class Animal implements IDrawable, IEdible {
         return false;
     }
 
-    public move( target: IDimensions) {
-        this.location = target;
+    public live(time: ITime) {
+        let add = - 1;
+        if ((time.day * time.hour) % 2 === 0) {
+            add = 1;
+        }
+        this.location = {x: this.location.x + add, y: this.location.y + add};
     }
 }

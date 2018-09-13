@@ -10,25 +10,12 @@ export class ApplicationComponent extends React.Component<{}>  {
         super(props);
     }
     componentDidMount() {
-        let joe: Animal = Animals.Rabbit.create("Jimmy", {x: 0, y: 0});
-        let bob: Animal = Animals.Rabbit.create("bob", {x: 0, y: 0});
+        let joe: Animal = Animals.Rabbit.create("Joe", {x: 5, y: 5});
+        let bob: Animal = Animals.Rabbit.create("Bob", {x: 8, y: 8});
         let render: Render = new Render(this.canvas, {x: 20, y: 20});
         render.addDrawable(joe);
         render.addDrawable(bob);
-        render.draw();
-        engine.timeKeeper.subscribe((data) => {
-            let dim = joe.getLocation();
-            joe.move({x: dim.x + 1, y: dim.y + 1});
-        });
-        setTimeout(() => {
-            engine.timeKeeper.subscribe((data) => console.log("second time: ", data));
-            engine.timeKeeper.subscribe(() => {
-                let dim = bob.getLocation();
-                bob.move({x: dim.x + 1, y: dim.y + 1});
-            });
-        },         3000);
-        engine.timeKeeper.subscribe(() => render.draw());
-        engine.timeKeeper.subscribe((data) => console.log("time: ", data));
+        engine.start();
     }
 
     render() {

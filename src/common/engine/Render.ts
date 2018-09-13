@@ -1,3 +1,5 @@
+import { timeKeeper } from "./GameEngine";
+
 export interface IDrawable {
     getLocation: () => IDimensions;
     getSize: () => IDimensions;
@@ -19,6 +21,7 @@ export default class Render {
     constructor(readonly canvas: HTMLCanvasElement, readonly size: IDimensions) {
         this.canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
         this.drawableList = new Array();
+        timeKeeper.subscribe(() => this.draw());
     }
 
     public addDrawable(drawable: IDrawable) {
