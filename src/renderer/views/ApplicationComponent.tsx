@@ -4,6 +4,8 @@ import Render from "../../common/engine/Render";
 import Animals from "../../common/entities/Animals";
 import Animal from "../../common/entities/Animal";
 import * as engine from "../../common/engine/GameEngine";
+import { filter, take } from "rxjs/operators";
+import {SpeedControlComponent} from "./SpeedControlComponent";
 
 export class ApplicationComponent extends React.Component<{}>  {
     constructor(props: React.ReactPropTypes) {
@@ -16,12 +18,14 @@ export class ApplicationComponent extends React.Component<{}>  {
         render.addDrawable(joe);
         render.addDrawable(bob);
         engine.start();
+        // engine.timeKeeper.pipe(filter(time => time.day === 2), take(1)).subscribe(engine.end);
     }
 
     render() {
         return (
             <div className="application" style={css.application()}>
                 <canvas id="mainboard" ref="canvas"></canvas>
+                <SpeedControlComponent/>
             </div>
         );
     }

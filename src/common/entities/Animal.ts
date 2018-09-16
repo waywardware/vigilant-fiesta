@@ -1,4 +1,4 @@
-import { ITime, timeKeeper } from "../engine/GameEngine";
+import { ITime, timeKeeper, calcCurrentTick } from "../engine/GameEngine";
 import { CanvasColor, IDimensions, IDrawable } from "../engine/Render";
 import { Colors } from "../utils/Constants";
 import { IDiet, IEdible, ISpeed } from "./EntityInterfaces";
@@ -25,8 +25,11 @@ export default class Animal implements IDrawable, IEdible {
     }
 
     public live(time: ITime) {
+        // TODO: Need a simple ai here.
         let add = - 1;
-        if ((time.day * time.hour) % 2 === 0) {
+        let currentTick = calcCurrentTick(time);
+        let remainer = currentTick % 2;
+        if (remainer === 0) {
             add = 1;
         }
         this.location = {x: this.location.x + add, y: this.location.y + add};
