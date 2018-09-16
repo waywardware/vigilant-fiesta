@@ -1,5 +1,5 @@
-import { Observable, Subject, Subscriber, interval } from "rxjs";
-import { scan, share, skipUntil, takeUntil, tap, map, skipWhile, filter } from "rxjs/operators";
+import { Observable, Subject, Subscriber } from "rxjs";
+import { filter, scan, share, skipUntil, takeUntil, tap } from "rxjs/operators";
 
 let speed = 1;
 let isPaused = false;
