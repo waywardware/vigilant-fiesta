@@ -14,7 +14,7 @@
         "tsc": "tsc",
         "unit-tests": "cross-env NODE_ENV=test electron-mocha --require ts-node/register test/**/*_spec.ts{,x}",
         "test": "npm run lint && npm run unit-tests",
-        "lint": "tslint src/**/*.ts{,x} test/**/*.ts{,x}",
+        "lint": "tslint src/**/*.ts{,x} test/**/*.ts",
         "electron": "electron ."
     },
     "repository": {
