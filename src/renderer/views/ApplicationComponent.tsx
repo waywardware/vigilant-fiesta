@@ -4,7 +4,6 @@ import Render from "../../common/engine/Render";
 import Animals from "../../common/entities/Animals";
 import Animal from "../../common/entities/Animal";
 import * as engine from "../../common/engine/GameEngine";
-import { filter, take } from "rxjs/operators";
 import {SpeedControlComponent} from "./SpeedControlComponent";
 
 export class ApplicationComponent extends React.Component<{}>  {
