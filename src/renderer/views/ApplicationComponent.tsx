@@ -12,11 +12,11 @@ export class ApplicationComponent extends React.Component<{}>  {
     }
     componentDidMount() {
         let joe: Animal = Animals.Rabbit.create("Joe", {x: 5, y: 5});
-        let bob: Animal = Animals.Rabbit.create("Bob", {x: 8, y: 8});
+        let bob: Animal = Animals.Dog.create("Bob", {x: 8, y: 8});
         let render: Render = new Render(this.canvas, {x: 20, y: 20});
         render.addDrawable(joe);
         render.addDrawable(bob);
-        engine.start();
+        engine.start(1);
         // engine.timeKeeper.pipe(filter(time => time.day === 2), take(1)).subscribe(engine.end);
     }
 

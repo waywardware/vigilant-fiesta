@@ -1,4 +1,5 @@
 import { timeKeeper } from "./GameEngine";
+import { Subscription } from "rxjs";
 
 export interface IDrawable {
     getLocation: () => IDimensions;
@@ -12,16 +13,18 @@ export interface IDimensions {
     readonly y: number;
 }
 
-export type CanvasColor  = string | CanvasGradient | CanvasPattern;
+export type CanvasColor = string | CanvasGradient | CanvasPattern;
 
 export default class Render {
     readonly canvasContext: CanvasRenderingContext2D;
     readonly drawableList: Array<IDrawable>;
 
+    private readonly timeSub: Subscription;
+
     constructor(readonly canvas: HTMLCanvasElement, readonly size: IDimensions) {
         this.canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
         this.drawableList = new Array();
-        timeKeeper.subscribe(() => this.draw());
+        this.timeSub = timeKeeper.subscribe(() => this.draw());
     }
 
     public addDrawable(drawable: IDrawable) {
@@ -31,7 +34,7 @@ export default class Render {
     public removeDrawable(drawable: IDrawable) {
         let index: number = this.drawableList.indexOf(drawable);
         if (index >= -1) {
-          this.drawableList.splice(index, 1);
+            this.drawableList.splice(index, 1);
         }
     }
 
@@ -66,5 +69,19 @@ export default class Render {
             resolve();
         });
         return promise;
+    }
+
+    /**
+     * Making sure that we are no longer listening for time updates. Right now
+     * this is useful for testing to make sure that we are cleanup as there
+     * might be more than one renderer. This should not really be needed in actual
+     * working code since there will only be one renderer that directly depends on the
+     * GameEngine. If this does get used elsewhere, some refactoring should probably
+     * be considered.
+     * Some reference material:
+     * * * https://medium.com/@benlesh/rxjs-dont-unsubscribe-6753ed4fda87
+     */
+    public clean(): void {
+        this.timeSub.unsubscribe();
     }
 }

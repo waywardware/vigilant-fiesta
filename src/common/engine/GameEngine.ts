@@ -1,41 +1,52 @@
-import { Observable, Subject, Subscriber } from "rxjs";
-import { filter, scan, share, skipUntil, takeUntil, tap } from "rxjs/operators";
+import { Observable, Subject, Subscriber, Observer, interval, of } from "rxjs";
+import { filter, scan, takeUntil, tap, skipWhile, skipUntil, share, withLatestFrom, concatMap, map, skip } from "rxjs/operators";
 
-let speed = 1;
-let isPaused = false;
-const dayLength = 24;
-
+let speed: number = 1;
+export const dayLength = 24;
 export interface ITime {
     hour: number;
     day: number;
 }
 
-const variableSpeedLoop = (observer: Subscriber<boolean>) => {
-    let tick = () => {
-        observer.next(isPaused);
-        setTimeout(() => tick(), 1000 / speed);
+const start$: Subject<number> = new Subject();
+const stop$ = new Subject();
+const tick$ = new Subject();
+
+start$.subscribe((targetSpeed) => startLoop(targetSpeed));
+stop$.subscribe(() => speed = 0);
+
+let timeout: any;
+let startLoop = (targetSpeed: number) => {
+    speed = targetSpeed;
+    if (timeout) {
+        clearTimeout(timeout);
+    }
+    let loop = () => {
+        if (speed > 0) {
+            tick$.next();
+            timeout = setTimeout(() => loop(), 1000 / speed);
+        }
     };
-    tick();
+    loop();
 };
 
-const start$ = new Subject();
-start$.subscribe(() => isPaused = false);
-const end$ = new Subject();
-export const timeKeeper = new Observable(variableSpeedLoop).pipe(
-    skipUntil(start$),
-    filter((isPaused) => !isPaused), // Allow only not paused
-    scan<boolean, ITime>((time) => ({hour: time.hour + 1, day: time.day}), {hour: 0, day: 0}),
+
+export const timeKeeper = tick$.pipe(
+    takeUntil(stop$),
+    scan<{}, ITime>((time) => ({ hour: time.hour + 1, day: time.day }), { hour: 0, day: 0 }),
     tap(time => time.hour = time.hour > dayLength ? 1 : time.hour),
     tap(time => time.day = time.hour === 1 ? time.day + 1 : time.day),
-    takeUntil(end$),
     share(),
-    );
+);
 
-export const start = () => start$.next();
-export const end = () => end$.next();
+
+export const start = (targetSpeed: number) => start$.next(targetSpeed);
+export const stop = () => stop$.next();
 export const setSpeed = (target: number) => {
-    isPaused = target < 1;
-    if (isPaused) return;
-    speed = target;
+    if (speed === 0 && target > 0) {
+        start$.next(target);
+    } else {
+        speed = target;
+    }
 };
 export const calcCurrentTick = (time: ITime) => ((time.day - 1) * dayLength) + (time.hour);

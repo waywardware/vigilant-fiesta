@@ -63,3 +63,6 @@ typings/
 # compiled code
 /compiled
 /dist
+
+# ide stuff
+/.vscode
