@@ -63,6 +63,7 @@ typings/
 # compiled code
 /compiled
 /dist
+/.rpt2_cache
 
 # ide stuff
 /.vscode
