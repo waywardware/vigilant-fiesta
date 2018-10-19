@@ -4,7 +4,7 @@ export default [
     {
         input: 'src/main/Main.ts',
         output: {
-            file: 'compiled/src/Main.js',
+            file: 'dist/Main.js',
             format: 'cjs'
         },
         plugins: [
@@ -18,7 +18,7 @@ export default [
     {
         input: 'src/renderer/Renderer.tsx',
         output: {
-            file: 'compiled/src/Renderer.js',
+            file: 'dist/Renderer.js',
             format: 'cjs'
         },
         plugins: [
