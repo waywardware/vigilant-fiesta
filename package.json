@@ -12,9 +12,9 @@
         "copy-html": "mkdirp compiled/src/ && cpx src/renderer/index.html compiled/src",
         "compile": "npm run cleanup && rollup -c && npm run copy-html",
         "tsc": "tsc",
-        "unit-tests": "NODE_ENV=test electron-mocha --require ts-node/register $(find test -name '*_spec.ts')",
+        "unit-tests": "cross-env NODE_ENV=test electron-mocha --require ts-node/register test/**/*_spec.ts",
         "test": "npm run lint && npm run unit-tests",
-        "lint": "tslint `find src -name '*.ts*'` `find test -name '*.ts*'`",
+        "lint": "tslint src/**/*.ts{,x} test/**/*.ts{,x}",
         "electron": "electron ."
     },
     "repository": {
