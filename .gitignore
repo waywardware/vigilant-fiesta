@@ -61,5 +61,5 @@ typings/
 .next
 
 # compiled code
-/compiled
-/dist
+/dist/*.js
+/dist/*.html
