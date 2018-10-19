@@ -6,7 +6,7 @@ export default class Animal implements IDrawable, IEdible {
 
     public getLocation = (): IDimensions => this.location;
     public getSize = (): IDimensions => this.size;
-    public getFillStyle = (): CanvasColor => Colors.green;
+    public getFillStyle = (): CanvasColor => Colors.blue;
 
     constructor(readonly name: string, readonly species: string, readonly diet: IDiet, readonly speed: ISpeed,
                 private location: IDimensions, private size: IDimensions) {}
