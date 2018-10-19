@@ -142,33 +142,6 @@ describe("Game engine", () => {
                 });
                 engine.start(speed);
             });
-            it("Should change speed", done => {
-                let speed = [
-                    engine.emitt.every(5).ms,
-                    engine.emitt.every(8).ms,
-                    engine.emitt.every(10).ms,
-                    engine.emitt.every(8).ms,
-                    engine.emitt.every(11).ms,
-                    engine.emitt.every(4).ms,
-                ];
-                let takeSpeedLength = engine.timeKeeper.pipe(take(speed.length));
-                let lastTick = takeSpeedLength.pipe(last());
-
-                let date: number;
-                let currentSpeed = speed[0];
-                takeSpeedLength.pipe(filter(time => time.hour === 1), take(1)).subscribe(time => {
-                    date = performance.now();
-                });
-                takeSpeedLength.pipe(filter(time => time.hour > 1)).subscribe(time => {
-                    let newDate = performance.now();
-                    expect(Math.floor(newDate - date)).to.equal(currentSpeed);
-                    currentSpeed = speed[time.hour];
-                    engine.setSpeed(currentSpeed);
-                    date = newDate;
-                });
-                lastTick.subscribe(() => done());
-                engine.start(speed[0]);
-            });
             it("Should behave no different if start is called multiple times", done => {
                 let take5 = engine.timeKeeper.pipe(take(5));
                 let lastTick = take5.pipe(last());
