@@ -34,9 +34,9 @@ describe("Animal Class", () => {
         let speed: ISpeed = {leisure: 0};
         let dummyDimension: IDimensions = {x: 0, y: 0};
 
-        let firstSpeciesFactory = (name: string) => new Animal(name, firstSpecies, secondSpeciesDiet, speed, dummyDimension, dummyDimension);
-        let secondSpeciesFactory = (name: string) => new Animal(name, secondSpecies, noSecondSpeciesDiet, speed, dummyDimension, dummyDimension);
-        let thirdSpeciesFactory = (name: string) => new Animal(name, thirdSpecies, allAnimalDiet, speed, dummyDimension, dummyDimension);
+        let firstSpeciesFactory = (name: string) => new Animal(name, firstSpecies, secondSpeciesDiet, speed, 10, dummyDimension, dummyDimension);
+        let secondSpeciesFactory = (name: string) => new Animal(name, secondSpecies, noSecondSpeciesDiet, speed, 10, dummyDimension, dummyDimension);
+        let thirdSpeciesFactory = (name: string) => new Animal(name, thirdSpecies, allAnimalDiet, speed, 10, dummyDimension, dummyDimension);
 
         let firstSpeciesAnimal: Animal = firstSpeciesFactory("Jimbo first");
         let otherFirstSpeciesAnimal: Animal = firstSpeciesFactory("Bobby first");
@@ -65,5 +65,10 @@ describe("Animal Class", () => {
             expect(thirdSpeciesAnimal.canEat(thirdSpeciesAnimal), "Third should not be able to eat itself").to.be.false;
             expect(thirdSpeciesAnimal.canEat(otherThirdSpeciesAnimal), "Third should be able to eat other third").to.be.true;
         });
+    });
+    describe("Living and dying", () => {
+        it("Should die when killed");
+        it("Should die of old age");
+        it("Should not age after death");
     });
 });
