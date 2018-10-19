@@ -121,8 +121,34 @@ describe("Game engine", () => {
             });
         });
         describe("Controlling the flow of time", () => {
-            it("Should pause and resume");
-            it("Should change speed");
+            it("Should pause and resume", done => {
+                let take10 = engine.timeKeeper.pipe(take(10));
+                let thirdTick = take10.pipe(filter(time => engine.calcCurrentTick(time) === 3), take(1));
+                let lastTick = take10.pipe(last());
+                let shouldBePause = false;
+
+                take10.subscribe(time => {
+                    expect(shouldBePause, "Expected events not to be fired when paused").to.be.false;
+                });
+                thirdTick.subscribe(() => {
+                    engine.setSpeed(0);
+                    setTimeout(() => engine.start(speed), 10);
+                });
+                lastTick.subscribe(time => {
+                    expect(engine.calcCurrentTick(time), "Expected events to continue after resume").to.equal(10);
+                    done();
+                });
+                engine.start(speed);
+            });
+            it("Should change speed", done => {
+                let speed1 = engine.emitt.every(1).ms;
+                let speed2 = 800;
+                let take10 = engine.timeKeeper.pipe(take(10));
+                let lastTick = take10.pipe(last());
+
+                lastTick.subscribe(() => done());
+                engine.start(1);
+            });
             it("Should behave no different if start is called multiple times");
         });
     });
