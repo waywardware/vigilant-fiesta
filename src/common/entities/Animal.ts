@@ -21,14 +21,11 @@ export default class Animal implements IDrawable, IEdible {
     constructor(readonly name: string, readonly species: string, readonly diet: IDiet,
         readonly speed: ISpeed, readonly maxAge: number, private location: IDimensions,
         private size: IDimensions) {
-        this.life$ = timeKeeper.pipe(
-            takeUntil(this.kill$),
-            take(maxAge),
-            );
-        this.death$ = this.life$.pipe(last());
+        this.life$ = timeKeeper.pipe(takeUntil(this.kill$), take(maxAge));
+        this.death$ = this.life$.pipe(last(), take(1));
 
-        this.life$.subscribe((time) => this.live(time));
-        this.death$.pipe(take(1)).subscribe(() => this.death());
+        this.life$.subscribe(time => this.live(time));
+        this.death$.subscribe(() => this.death());
     }
 
     public canEat(target: IEdible): boolean {

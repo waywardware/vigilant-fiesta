@@ -50,3 +50,10 @@ export const setSpeed = (target: number) => {
     }
 };
 export const calcCurrentTick = (time: ITime) => ((time.day - 1) * dayLength) + (time.hour);
+export const emitt = {
+    every: (timeUnit: number) => ({
+        ms: timeUnit,
+        sec: timeUnit * 1000,
+    }),
+};
+

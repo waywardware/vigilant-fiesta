@@ -62,10 +62,8 @@ typings/
 
 # compiled code
 /dist
-<<<<<<< HEAD
+-/dis/assets/**/*
+/.rpt2_cache
 
 # ide stuff
 /.vscode
-=======
--/dis/assets/**/*
->>>>>>> 8a94e8a5d029cda55898939acfc3d9824b43b4d8
