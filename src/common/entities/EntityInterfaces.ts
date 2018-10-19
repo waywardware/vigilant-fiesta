@@ -11,4 +11,3 @@ export interface ISpeed {
 export interface IDiet {
     readonly foodSources: Array<IEdible>;
 }
-

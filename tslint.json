@@ -1,11 +1,5 @@
 {
     "rules": {
-        "align": [
-            true,
-            "parameters",
-            "arguments",
-            "statements"
-        ],
         "ban": [
             true,
             ["Object", "assign", "Use spread syntax ({...a, ...b}) instead."]
