@@ -2,19 +2,19 @@
     "name": "vigilant-fiesta",
     "version": "0.1.0",
     "description": "A hobby project creating a simple ecosystem sim.",
-    "main": "compiled/src/Main.js",
+    "main": "dist/Main.js",
     "scripts": {
         "postinstall": "electron-builder install-app-deps",
         "pack": "cross-env DEBUG=electron-builder electron-builder build",
-        "prestart": "npm install && npm run compile && npm run lint",
+        "prestart": "npm install && npm run build && npm run lint",
         "start": "cross-env NODE_ENV=development npm run electron",
-        "cleanup": "rimraf compiled/src",
-        "copy-html": "mkdirp compiled/src/ && cpx src/renderer/index.html compiled/src",
-        "compile": "npm run cleanup && rollup -c && npm run copy-html",
+        "cleanup": "rimraf dist/*.js && rimraf dis/*.html",
+        "copy-html": "mkdirp dist/ && cpx src/renderer/index.html dist/",
+        "build": "npm run cleanup && rollup -c && npm run copy-html",
         "tsc": "tsc",
-        "unit-tests": "NODE_ENV=test electron-mocha --require ts-node/register $(find test -name '*_spec.ts')",
+        "unit-tests": "cross-env NODE_ENV=test electron-mocha --require ts-node/register test/**/*_spec.ts",
         "test": "npm run lint && npm run unit-tests",
-        "lint": "tslint `find src -name '*.ts*'` `find test -name '*.ts*'`",
+        "lint": "tslint src/**/*.ts{,x} test/**/*.ts{,x}",
         "electron": "electron ."
     },
     "repository": {
@@ -65,10 +65,10 @@
             "category": "your.app.category.type"
         },
         "files": [
-            "compiled/",
-            "compiled/src/index.html",
-            "compiled/src/Main.js",
-            "compiled/src/Renderer.js"
+            "dist/",
+            "dist/index.html",
+            "dist/Main.js",
+            "dist/Renderer.js"
         ]
     }
 }
