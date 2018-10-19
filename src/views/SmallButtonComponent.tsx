@@ -1,5 +1,4 @@
 import React from "react";
-import { Colors } from "../../common/utils/Constants";
 
 interface ISmallButtonProps {
     text: string;

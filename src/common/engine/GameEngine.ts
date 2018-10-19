@@ -40,7 +40,7 @@ export const timeKeeper = tick$.pipe(
 );
 
 
-export const start = (targetSpeed: number) => start$.next(targetSpeed);
+export const start = (targetSpeed: number = emitt.every(1).sec) => start$.next(targetSpeed);
 export const stop = () => stop$.next();
 export const setSpeed = (target: number) => {
     if (speed === 0 && target > 0) {

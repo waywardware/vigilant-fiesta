@@ -9,10 +9,10 @@ app.on("window-all-closed", onAllWindowsClosed);
 app.on("activate", onActivate);
 
 function createWindow() {
-    window = new BrowserWindow({ width: 800, height: 800, icon: path.join(__dirname + "./assets/Icons/eco-icon.png") });
+    window = new BrowserWindow({ width: 800, height: 800, icon: path.join(__dirname + "./static/images/icons/eco-icon.png") });
     window.loadURL(
         url.format({
-        pathname: path.join(__dirname, "/index.html"),
+        pathname: path.join(__dirname, "static/index.html"),
         protocol: "file:",
         slashes: true,
         }));

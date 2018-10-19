@@ -1,5 +1,4 @@
-import {application} from "../common/utils/Styles";
-import {ApplicationComponent} from "./views/ApplicationComponent";
+import {ApplicationComponent} from "../views/ApplicationComponent";
 import * as React from "react";
 import * as reactdom from "react-dom";
 

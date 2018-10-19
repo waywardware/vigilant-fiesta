@@ -1,5 +1,5 @@
 import React from "react";
-import * as engine from "../../common/engine/GameEngine";
+import * as engine from "../common/engine/GameEngine";
 import { SmallButtonComponent } from "./SmallButtonComponent";
 
 

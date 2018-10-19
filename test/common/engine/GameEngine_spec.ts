@@ -2,7 +2,6 @@ const sinon = require("sinon");
 import * as engine from "../../../src/common/engine/GameEngine";
 import { expect } from "chai";
 import { take, last, filter, takeWhile } from "rxjs/operators";
-import {performance} from "perf_hooks";
 
 // tslint:disable:no-unused-expression
 describe("Game engine", () => {
