@@ -4,7 +4,6 @@ import { Colors } from "../utils/Constants";
 import { IDiet, IEdible, ISpeed } from "./EntityInterfaces";
 import { Observable, Subject, merge } from "rxjs";
 import { takeUntil, take, scan, last } from "rxjs/operators";
-import { number } from "prop-types";
 
 export default class Animal implements IDrawable, IEdible {
 

@@ -2,6 +2,7 @@ const sinon = require("sinon");
 import * as engine from "../../../src/common/engine/GameEngine";
 import { expect } from "chai";
 import { take, last, filter, takeWhile } from "rxjs/operators";
+import {performance} from "perf_hooks";
 
 // tslint:disable:no-unused-expression
 describe("Game engine", () => {
@@ -11,7 +12,7 @@ describe("Game engine", () => {
         engine.stop();
     });
     describe("Timekeeper", () => {
-        let speed = Math.pow(10, 1000);
+        let speed = engine.emitt.every(4).ms;
         describe("Starting and ending", () => {
             it("Should start only when start is called", done => {
                 let hasStartBeenCalled: boolean = false;
@@ -72,7 +73,7 @@ describe("Game engine", () => {
             });
             it("Should increase hour correctly", done => {
                 let previousTime: engine.ITime = {hour: 0, day: 0 };
-                let oneDay = engine.timeKeeper.pipe(take(engine.dayLength));
+                let oneDay = engine.timeKeeper.pipe(take(10));
 
                 oneDay.subscribe(time => {
                     expect(time.hour).to.be.greaterThan(previousTime.hour);
@@ -99,21 +100,21 @@ describe("Game engine", () => {
                 engine.start(speed);
             });
             it("Should send out the same tick to all subscribers", done => {
-                let take10 = engine.timeKeeper.pipe(take(10));
-                let lastTick = take10.pipe(last());
+                let take5 = engine.timeKeeper.pipe(take(5));
+                let lastTick = take5.pipe(last());
                 let timeFromFirstSub: engine.ITime;
 
-                take10.subscribe(time => timeFromFirstSub = time);
-                take10.subscribe(time => {
+                take5.subscribe(time => timeFromFirstSub = time);
+                take5.subscribe(time => {
                     expect(time).to.equal(timeFromFirstSub, "Expected all subs to have same data");
                 });
-                take10.subscribe(time => {
+                take5.subscribe(time => {
                     expect(time).to.equal(timeFromFirstSub, "Expected all subs to have same data");
                 });
-                take10.subscribe(time => {
+                take5.subscribe(time => {
                     expect(time).to.equal(timeFromFirstSub, "Expected all subs to have same data");
                 });
-                take10.subscribe(time => {
+                take5.subscribe(time => {
                     expect(time).to.equal(timeFromFirstSub, "Expected all subs to have same data");
                 });
                 lastTick.subscribe(() => done());
@@ -122,12 +123,13 @@ describe("Game engine", () => {
         });
         describe("Controlling the flow of time", () => {
             it("Should pause and resume", done => {
-                let take10 = engine.timeKeeper.pipe(take(10));
-                let thirdTick = take10.pipe(filter(time => engine.calcCurrentTick(time) === 3), take(1));
-                let lastTick = take10.pipe(last());
+                let howManyTakes = 5;
+                let take5 = engine.timeKeeper.pipe(take(howManyTakes));
+                let thirdTick = take5.pipe(filter(time => engine.calcCurrentTick(time) === 3), take(1));
+                let lastTick = take5.pipe(last());
                 let shouldBePause = false;
 
-                take10.subscribe(time => {
+                take5.subscribe(time => {
                     expect(shouldBePause, "Expected events not to be fired when paused").to.be.false;
                 });
                 thirdTick.subscribe(() => {
@@ -135,21 +137,53 @@ describe("Game engine", () => {
                     setTimeout(() => engine.start(speed), 10);
                 });
                 lastTick.subscribe(time => {
-                    expect(engine.calcCurrentTick(time), "Expected events to continue after resume").to.equal(10);
+                    expect(engine.calcCurrentTick(time), "Expected events to continue after resume").to.equal(howManyTakes);
                     done();
                 });
                 engine.start(speed);
             });
             it("Should change speed", done => {
-                let speed1 = engine.emitt.every(1).ms;
-                let speed2 = 800;
-                let take10 = engine.timeKeeper.pipe(take(10));
-                let lastTick = take10.pipe(last());
+                let speed = [
+                    engine.emitt.every(5).ms,
+                    engine.emitt.every(8).ms,
+                    engine.emitt.every(10).ms,
+                    engine.emitt.every(8).ms,
+                    engine.emitt.every(11).ms,
+                    engine.emitt.every(4).ms,
+                ];
+                let takeSpeedLength = engine.timeKeeper.pipe(take(speed.length));
+                let lastTick = takeSpeedLength.pipe(last());
 
+                let date: number;
+                let currentSpeed = speed[0];
+                takeSpeedLength.pipe(filter(time => time.hour === 1), take(1)).subscribe(time => {
+                    date = performance.now();
+                });
+                takeSpeedLength.pipe(filter(time => time.hour > 1)).subscribe(time => {
+                    let newDate = performance.now();
+                    expect(Math.floor(newDate - date)).to.equal(currentSpeed);
+                    currentSpeed = speed[time.hour];
+                    engine.setSpeed(currentSpeed);
+                    date = newDate;
+                });
                 lastTick.subscribe(() => done());
-                engine.start(1);
+                engine.start(speed[0]);
             });
-            it("Should behave no different if start is called multiple times");
+            it("Should behave no different if start is called multiple times", done => {
+                let take5 = engine.timeKeeper.pipe(take(5));
+                let lastTick = take5.pipe(last());
+
+                let count: number = 0;
+                take5.subscribe(time => {
+                    count++;
+                });
+
+                lastTick.subscribe(() => {
+                    expect(count).to.equal(5);
+                    done();
+                });
+                engine.start(speed);
+            });
         });
     });
 });

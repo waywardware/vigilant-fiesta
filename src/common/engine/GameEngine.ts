@@ -24,7 +24,7 @@ let startLoop = (targetSpeed: number) => {
     let loop = () => {
         if (speed > 0) {
             tick$.next();
-            timeout = setTimeout(() => loop(), 1000 / speed);
+            timeout = setTimeout(() => loop(), speed);
         }
     };
     loop();
