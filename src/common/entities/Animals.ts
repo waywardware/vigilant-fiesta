@@ -1,9 +1,7 @@
-import Animal from "./Animal";
-import Plants from "./Plants";
 import { IDimensions } from "../engine/Render";
+import Animal from "./Animal";
 import { IDiet, ISpeed } from "./EntityInterfaces";
-import { timeKeeper } from "../engine/GameEngine";
-
+import Plants from "./Plants";
 
 let Animals = {
     Rabbit: {
@@ -27,6 +25,5 @@ let Animals = {
         },
     },
 };
-
 
 export default Animals;

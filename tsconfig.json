@@ -5,6 +5,7 @@
         "moduleResolution": "node",
         "experimentalDecorators": true,
         "noImplicitAny": true,
+        "noUnusedLocals": true,
         "noImplicitThis": true,
         "noEmitOnError": true,
         "allowSyntheticDefaultImports": true,

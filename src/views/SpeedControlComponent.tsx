@@ -2,8 +2,6 @@ import React from "react";
 import * as engine from "../common/engine/GameEngine";
 import { SmallButtonComponent } from "./SmallButtonComponent";
 
-
-
 export class SpeedControlComponent extends React.Component {
 
     renderButton(text: string, value: number) {

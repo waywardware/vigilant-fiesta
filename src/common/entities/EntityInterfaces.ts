@@ -1,5 +1,3 @@
-import Plants from "./Plants";
-
 export interface IEdible {
     readonly species: string;
 }

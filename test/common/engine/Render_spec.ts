@@ -1,4 +1,4 @@
-const sinon = require("sinon");
+import * as sinon from "sinon";
 import {expect} from "chai";
 import Render, { IDrawable } from "../../../src/common/engine/Render";
 import {JSDOM} from "jsdom";

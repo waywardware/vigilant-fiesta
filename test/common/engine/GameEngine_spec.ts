@@ -1,4 +1,3 @@
-const sinon = require("sinon");
 import * as engine from "../../../src/common/engine/GameEngine";
 import { expect } from "chai";
 import { take, last, filter, takeWhile } from "rxjs/operators";
@@ -11,7 +10,7 @@ describe("Game engine", () => {
         engine.stop();
     });
     describe("Timekeeper", () => {
-        let speed = engine.emitt.every(4).ms;
+        let speed = engine.emit.every(4).ms;
         describe("Starting and ending", () => {
             it("Should start only when start is called", done => {
                 let hasStartBeenCalled: boolean = false;
@@ -27,12 +26,12 @@ describe("Game engine", () => {
             it("Should start anew when start is called after an end", done => {
                 engine.start(speed);
                 let take5 = engine.timeKeeper.pipe(take(5));
-                take5.pipe(last()).subscribe((endingTimeOfFistSub) => {
+                take5.pipe(last()).subscribe(endingTimeOfFistSub => {
                     let count = engine.calcCurrentTick(endingTimeOfFistSub);
                     expect(count).to.equal(5);
                     engine.stop();
                     engine.start(speed);
-                    engine.timeKeeper.pipe(take(1)).subscribe((time) => {
+                    engine.timeKeeper.pipe(take(1)).subscribe(time => {
                         expect(time.hour).to.equal(1, "Expected hour to reset");
                         expect(time.day).to.equal(1, "Expected day to reset");
                         done();
@@ -42,14 +41,14 @@ describe("Game engine", () => {
             it("Should not send out more event after an end", done => {
                 let count = 0;
                 let take10 = engine.timeKeeper.pipe(take(10));
-                take10.pipe(last()).subscribe((time) => {
+                take10.pipe(last()).subscribe(time => {
                     count = engine.calcCurrentTick(time);
                     expect(count).to.equal(10, "Expected time to still pass");
 
                     engine.stop();
                     count = 0;
 
-                    take10.pipe(last()).subscribe((time) => {
+                    take10.pipe(last()).subscribe(time => {
                         // In a working engine, this shouldn't happen
                         count = engine.calcCurrentTick(time);
                     });
