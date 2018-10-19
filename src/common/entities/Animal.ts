@@ -1,9 +1,9 @@
-import { ITime, timeKeeper, calcCurrentTick } from "../engine/GameEngine";
+import { Observable, Subject } from "rxjs";
+import { last, take, takeUntil } from "rxjs/operators";
+import { calcCurrentTick, ITime, timeKeeper } from "../engine/GameEngine";
 import { CanvasColor, IDimensions, IDrawable } from "../engine/Render";
 import { Colors } from "../utils/Constants";
 import { IDiet, IEdible, ISpeed } from "./EntityInterfaces";
-import { Observable, Subject, merge } from "rxjs";
-import { takeUntil, take, scan, last } from "rxjs/operators";
 
 export default class Animal implements IDrawable, IEdible {
 
@@ -13,18 +13,22 @@ export default class Animal implements IDrawable, IEdible {
 
     private color: CanvasColor = Colors.green;
 
-    public readonly getLocation = (): IDimensions => this.location;
-    public readonly getSize = (): IDimensions => this.size;
-    public readonly getFillStyle = (): CanvasColor => this.color;
-
     constructor(readonly name: string, readonly species: string, readonly diet: IDiet,
-        readonly speed: ISpeed, readonly maxAge: number, private location: IDimensions,
-        private size: IDimensions) {
+                readonly speed: ISpeed, readonly maxAge: number, private location: IDimensions,
+                private size: IDimensions) {
         this.life$ = timeKeeper.pipe(takeUntil(this.kill$), take(maxAge));
         this.death$ = this.life$.pipe(last(), take(1));
 
         this.life$.subscribe(time => this.live(time));
         this.death$.subscribe(() => this.death());
+    }
+
+    public readonly getLocation = (): IDimensions => this.location;
+    public readonly getSize = (): IDimensions => this.size;
+    public readonly getFillStyle = (): CanvasColor => this.color;
+
+    public kill(): void {
+        this.kill$.next();
     }
 
     public canEat(target: IEdible): boolean {
@@ -37,9 +41,7 @@ export default class Animal implements IDrawable, IEdible {
         return false;
     }
 
-    public readonly kill = () => this.kill$.next();
-
-    private live(time: ITime) {
+    private live(time: ITime): void {
         // TODO: Need a simple ai here.
         let add = - 1;
         let currentTick = calcCurrentTick(time);
@@ -50,7 +52,7 @@ export default class Animal implements IDrawable, IEdible {
         this.location = { x: this.location.x + add, y: this.location.y + add };
     }
 
-    private death() {
+    private death(): void {
         this.color = Colors.red;
     }
 

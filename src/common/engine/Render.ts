@@ -1,5 +1,5 @@
-import { timeKeeper } from "./GameEngine";
 import { Subscription } from "rxjs";
+import { timeKeeper } from "./GameEngine";
 
 export interface IDrawable {
     getLocation: () => IDimensions;
