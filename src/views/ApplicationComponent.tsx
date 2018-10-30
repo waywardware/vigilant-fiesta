@@ -1,9 +1,9 @@
 import * as React from "react";
-import * as css from "../../common/utils/Styles";
-import Render from "../../common/engine/Render";
-import Animals from "../../common/entities/Animals";
-import Animal from "../../common/entities/Animal";
-import * as engine from "../../common/engine/GameEngine";
+import * as css from "../common/utils/Styles";
+import Render from "../common/engine/Render";
+import Animals from "../common/entities/Animals";
+import Animal from "../common/entities/Animal";
+import * as engine from "../common/engine/GameEngine";
 import {SpeedControlComponent} from "./SpeedControlComponent";
 
 export class ApplicationComponent extends React.Component<{}>  {
@@ -16,7 +16,7 @@ export class ApplicationComponent extends React.Component<{}>  {
         let render: Render = new Render(this.canvas, {x: 20, y: 20});
         render.addDrawable(joe);
         render.addDrawable(bob);
-        engine.start(1);
+        engine.start();
         // engine.timeKeeper.pipe(filter(time => time.day === 2), take(1)).subscribe(engine.end);
     }
 
