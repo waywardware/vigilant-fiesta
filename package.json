@@ -20,7 +20,20 @@
         "type": "git",
         "url": "git+https://github.com/waywardware/vigilant-fiesta.git"
     },
-    "author": "abouzo",
+    "author": {
+        "name": "Angel Bouzo",
+        "email": "angelb7574@gmail.com"
+    },
+    "contributors": [
+        {
+            "name": "afwebs",
+            "email": "afwebs23@gmail.com"
+        },
+        {
+            "name": "Zira Cook",
+            "email": "ziracook@gmail.com"
+        }
+    ],
     "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/waywardware/vigilant-fiesta/issues"
