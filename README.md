@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/waywardware/vigilant-fiesta.svg?branch=master)](https://travis-ci.org/waywardware/vigilant-fiesta)
+
 What is this?
 ------------------
 This is just a hobby project to practice and improve coding and architecture skills. This is an ongoing project with the aim to start simple and then increase in complexity
