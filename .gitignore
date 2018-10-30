@@ -61,8 +61,8 @@ typings/
 .next
 
 # compiled code
-/dist
--/dis/assets/**/*
+/dist/*
+!dist/static
 /.rpt2_cache
 
 # ide stuff
