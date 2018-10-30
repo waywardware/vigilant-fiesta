@@ -1,4 +1,4 @@
-const sinon = require("sinon");
+import * as sinon from "sinon";
 import {expect} from "chai";
 import Render, { IDrawable } from "../../../src/common/engine/Render";
 import {JSDOM} from "jsdom";
@@ -26,6 +26,7 @@ describe("Canvas Renderer", () => {
             expect(render.drawableList).to.contain(secondDrawable, "secondDrawable should be registered");
 
             getContext.restore();
+            render.clean();
         });
         it("Should remove drawables", () => {
             let getContext = sinon.stub(canvas, "getContext");
@@ -45,6 +46,7 @@ describe("Canvas Renderer", () => {
                 .to.be.an("Array", "drawableList should be an array")
                 .of.length(0, "Array should be empty");
             getContext.restore();
+            render.clean();
         });
     });
 });
