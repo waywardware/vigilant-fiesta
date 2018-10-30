@@ -1,6 +1,5 @@
-import Plant from "./Plant";
 import { IDimensions } from "../engine/Render";
-import { IDiet, ISpeed } from "./EntityInterfaces";
+import Plant from "./Plant";
 
 let Plants = {
     Shrub: {
