@@ -1,13 +1,15 @@
-import typescript from "rollup-plugin-typescript";
+import typescript from "rollup-plugin-typescript2";
+import { terser } from "rollup-plugin-terser";
 
 export default [
     {
-        input: 'src/main/Main.ts',
+        input: 'src/coreElectron/Main.ts',
         output: {
-            file: 'dist/Main.js',
+            file: 'dist/main.js',
             format: 'cjs'
         },
         plugins: [
+            terser(),
             typescript({
                 target: "ES6",
                 typescript: require("typescript")
@@ -16,12 +18,13 @@ export default [
         external: ['electron']
     },
     {
-        input: 'src/renderer/Renderer.tsx',
+        input: 'src/pages/Index.tsx',
         output: {
-            file: 'dist/Renderer.js',
+            file: 'dist/index.js',
             format: 'cjs'
         },
         plugins: [
+            terser(),
             typescript({
                 target: "ES6",
                 typescript: require("typescript")

@@ -5,18 +5,19 @@
         "moduleResolution": "node",
         "experimentalDecorators": true,
         "noImplicitAny": true,
+        "noUnusedLocals": true,
         "noImplicitThis": true,
         "noEmitOnError": true,
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "sourceMap": true,
         "skipLibCheck": true,
-        "allowJs": true,
+        "allowJs": false,
         "jsx": "react",
         "lib": ["es2015", "es2017", "dom"]
     },
     "exclude": [
       "node_modules",
-      "src/main"
+      "compiled/**"
     ]
 }

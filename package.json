@@ -2,26 +2,38 @@
     "name": "vigilant-fiesta",
     "version": "0.1.0",
     "description": "A hobby project creating a simple ecosystem sim.",
-    "main": "dist/Main.js",
+    "main": "dist/main.js",
     "scripts": {
         "postinstall": "electron-builder install-app-deps",
         "pack": "cross-env DEBUG=electron-builder electron-builder build",
         "prestart": "npm install && npm run build && npm run lint",
         "start": "cross-env NODE_ENV=development npm run electron",
-        "cleanup": "rimraf dist/*.js && rimraf dis/*.html",
-        "copy-html": "mkdirp dist/ && cpx src/renderer/index.html dist/",
-        "build": "npm run cleanup && rollup -c && npm run copy-html",
+        "cleanup": "rimraf dist/*.js",
+        "build": "npm run cleanup && rollup -c",
         "tsc": "tsc",
         "unit-tests": "cross-env NODE_ENV=test electron-mocha --require ts-node/register test/**/*_spec.ts",
         "test": "npm run lint && npm run unit-tests",
-        "lint": "tslint src/**/*.ts{,x} test/**/*.ts{,x}",
+        "lint": "tslint --fix --project ./tslint.json",
         "electron": "electron ."
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/waywardware/vigilant-fiesta.git"
     },
-    "author": "abouzo",
+    "author": {
+        "name": "Angel Bouzo",
+        "email": "angelb7574@gmail.com"
+    },
+    "contributors": [
+        {
+            "name": "afwebs",
+            "email": "afwebs23@gmail.com"
+        },
+        {
+            "name": "Zira Cook",
+            "email": "ziracook@gmail.com"
+        }
+    ],
     "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/waywardware/vigilant-fiesta/issues"
@@ -46,10 +58,11 @@
         "mocha": "^5.2.0",
         "npm-run-all": "^4.1.2",
         "rimraf": "^2.6.2",
-        "rollup": "^0.65.1",
-        "rollup-plugin-typescript": "^0.8.1",
+        "rollup": "^0.66.6",
+        "rollup-plugin-terser": "^3.0.0",
+        "rollup-plugin-typescript2": "^0.8.1",
+        "rxjs": "^6.3.2",
         "sinon": "^6.1.5",
-        "ts-loader": "^4.0.0",
         "ts-node": "^7.0.1",
         "tslint": "^5.11.0"
     },
@@ -66,8 +79,8 @@
         "files": [
             "dist/",
             "dist/index.html",
-            "dist/Main.js",
-            "dist/Renderer.js"
+            "dist/main.js",
+            "dist/index.js"
         ]
     }
 }

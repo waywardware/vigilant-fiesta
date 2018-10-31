@@ -1,5 +1,3 @@
-import Plants from "./Plants";
-
 export interface IEdible {
     readonly species: string;
 }
@@ -11,4 +9,3 @@ export interface ISpeed {
 export interface IDiet {
     readonly foodSources: Array<IEdible>;
 }
-
