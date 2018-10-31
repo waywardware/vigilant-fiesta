@@ -12,3 +12,8 @@ To run test: `npm test`
 License
 ------------
 [GPL 3.0](LICENSE)
+
+Authors
+----------
+Angel Bouzo
+
