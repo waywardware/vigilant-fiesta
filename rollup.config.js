@@ -1,5 +1,7 @@
-import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
+import typescript from "rollup-plugin-typescript2";
+import resolve from "rollup-plugin-node-resolve";
+import cjs from "rollup-plugin-commonjs";
 
 export default [
     {
@@ -24,6 +26,8 @@ export default [
             format: 'cjs'
         },
         plugins: [
+            resolve(),
+            cjs(),
             terser(),
             typescript({
                 target: "ES6",
